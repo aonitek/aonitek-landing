@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+
+<!-- SEO Meta Tags -->
+<title>Aonitek — IA para tu negocio, sin complicaciones</title>
+<meta name="description" content="Implementación de inteligencia artificial para PYMES en Argentina. Agentes IA, automatización de procesos y landing pages con IA. Resultados en 7 días o devolve" />
+<meta name="keywords" content="implementación de inteligencia artificial para PYMES Argentina" />
+<meta property="og:title" content="Aonitek — IA para tu negocio, sin complicaciones" />
+<meta property="og:description" content="Implementación de inteligencia artificial para PYMES en Argentina. Agentes IA, automatización de procesos y landing pages con IA. Resultados en 7 días o devolve" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Aonitek — IA para tu negocio, sin complicaciones" />
+<meta name="twitter:description" content="Implementación de inteligencia artificial para PYMES en Argentina. Agentes IA, automatización de procesos y landing pages con IA. Resultados en 7 días o devolve" />
+<link rel="icon" href="https://app.aonitek.com/api/landing-pages/images/landing-page-images%2F0%2F1772556093018_blob.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="https://app.aonitek.com/api/landing-pages/images/landing-page-images%2F0%2F1772556093018_blob.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="https://app.aonitek.com/api/landing-pages/images/landing-page-images%2F0%2F1772556093018_blob.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="https://app.aonitek.com/api/landing-pages/images/landing-page-images%2F0%2F1772556093018_blob.png" />
+<!-- End SEO Meta Tags -->
+
+<script data-field-replace>
+(function(){
+  var params=new URLSearchParams(window.location.search);
+  var fields={};
+  var paramMap={
+    'first_name':'firstName','last_name':'lastName','full_name':'fullName',
+    'email':'email','phone':'phone','company':'company',
+    'city':'city','state':'state','country':'country'
+  };
+  var skipTags={'SCRIPT':1,'STYLE':1,'NOSCRIPT':1,'TEXTAREA':1,'CODE':1,'PRE':1};
+  var hasUrlFields=false;
+  for(var p in paramMap){
+    var v=params.get(p);
+    if(v){fields[paramMap[p]]=v;hasUrlFields=true;}
+  }
+  var contactId=params.get('contact_id');
+  function esc(s){
+    if(!s)return s;
+    var d=document.createElement('div');
+    d.appendChild(document.createTextNode(s));
+    return d.innerHTML;
+  }
+  function doReplace(data){
+    var r={};
+    r['{{full_name}}']=esc(((data.firstName||'')+' '+(data.lastName||'')).trim()||((data.fullName||data.name)||''));
+    r['{{first_name}}']=esc(data.firstName||(data.name?data.name.split(' ')[0]:'')||'');
+    r['{{last_name}}']=esc(data.lastName||(data.name&&data.name.indexOf(' ')>-1?data.name.substring(data.name.indexOf(' ')+1):'')||'');
+    r['{{email}}']=esc(data.email||'');
+    r['{{phone}}']=esc(data.phone||'');
+    r['{{company}}']=esc(data.company||'');
+    r['{{city}}']=esc(data.city||'');
+    r['{{state}}']=esc(data.state||'');
+    r['{{country}}']=esc(data.country||'');
+    r['{{date}}']=new Date().toLocaleDateString();
+    r['{{time}}']=new Date().toLocaleTimeString();
+    r['{{location}}']=[data.city,data.state,data.country].filter(Boolean).join(', ');
+    r['{{tracking_id}}']=esc(data.trackingId||'');
+    r['{{lastClickedProduct}}']=esc(data.lastClickedProduct||'');
+    r['{{lastProductClickDate}}']=esc(data.lastProductClickDate||'');
+    r['{{lastClickedProductPrice}}']=esc(data.lastClickedProductPrice||'');
+    r['{{lastClickedProductURL}}']=esc(data.lastClickedProductURL||'');
+    r['{{productsClickedCount}}']=esc(data.productsClickedCount||'0');
+    r['{{ip_address}}']=esc(data.ipAddress||'');
+    r['{{ip}}']=esc(data.ipAddress||'');
+    if(data.customFields){
+      for(var k in data.customFields){
+        r['{{'+k+'}}']=esc(String(data.customFields[k]||''));
+      }
+    }
+    params.forEach(function(v,k){
+      if(!paramMap[k]&&k!=='contact_id'&&k!=='page_id'&&k.indexOf('utm_')!==0){
+        r['{{'+k+'}}']=esc(v);
+      }
+    });
+    var hasValues=false;
+    for(var key in r){if(r[key]){hasValues=true;break;}}
+    if(!hasValues)return;
+    var walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{
+      acceptNode:function(n){
+        var p=n.parentNode;
+        if(p&&skipTags[p.nodeName])return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var node;
+    while(node=walker.nextNode()){
+      var txt=node.nodeValue;
+      if(txt&&txt.indexOf('{{')>-1){
+        var changed=txt;
+        for(var ph in r){
+          if(r[ph]&&changed.indexOf(ph)>-1){
+            changed=changed.split(ph).join(r[ph]);
+          }
+        }
+        if(changed!==txt)node.nodeValue=changed;
+      }
+    }
+    var attrs=['value','placeholder','content','alt','title'];
+    attrs.forEach(function(attr){
+      var els=document.querySelectorAll('['+attr+'*="{{"]');
+      for(var i=0;i<els.length;i++){
+        var tag=els[i].tagName;
+        if(skipTags[tag])continue;
+        var val=els[i].getAttribute(attr);
+        if(val){
+          var nv=val;
+          for(var ph in r){
+            if(r[ph]&&nv.indexOf(ph)>-1){
+              nv=nv.split(ph).join(r[ph]);
+            }
+          }
+          if(nv!==val)els[i].setAttribute(attr,nv);
+        }
+      }
+    });
+  }
+  function run(){
+    if(contactId){
+      var xhr=new XMLHttpRequest();
+      xhr.open('GET','https://app.aonitek.com/api/landing/context/'+encodeURIComponent(contactId)+'?page_id=1913');
+      xhr.onload=function(){
+        if(xhr.status===200){
+          try{
+            var resp=JSON.parse(xhr.responseText);
+            if(resp.success&&resp.contact){
+              var merged=resp.contact;
+              for(var k in fields){merged[k]=fields[k];}
+              doReplace(merged);
+              return;
+            }
+          }catch(e){}
+        }
+        if(hasUrlFields)doReplace(fields);
+      };
+      xhr.onerror=function(){if(hasUrlFields)doReplace(fields);};
+      xhr.send();
+    }else if(hasUrlFields){
+      doReplace(fields);
+    }
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',run);}
+  else{run();}
+})();
+</script>
+<script data-payment>
+(function(){
+  var slug='6Y9bamA';
+  var apiBase='https://app.aonitek.com';
+  function findEmail(){
+    var ids=['email','emailAddress','buyer-email','buyerEmail','user-email','userEmail','checkout-email','customer-email','contact-email'];
+    for(var i=0;i<ids.length;i++){var el=document.getElementById(ids[i]);if(el&&el.value&&el.value.includes('@'))return el.value.trim();}
+    var inputs=document.querySelectorAll('input[type="email"],input[name*="email"],input[placeholder*="email"],input[placeholder*="Email"]');
+    for(var j=0;j<inputs.length;j++){if(inputs[j].value&&inputs[j].value.includes('@'))return inputs[j].value.trim();}
+    return '';
+  }
+  function findName(){
+    var ids=['name','fullName','full-name','buyer-name','buyerName','customer-name','userName','user-name'];
+    for(var i=0;i<ids.length;i++){var el=document.getElementById(ids[i]);if(el&&el.value)return el.value.trim();}
+    var inputs=document.querySelectorAll('input[name*="name"]:not([name*="email"]):not([type="email"]),input[placeholder*="name"]:not([placeholder*="email"]):not([type="email"]),input[placeholder*="Name"]:not([type="email"])');
+    for(var j=0;j<inputs.length;j++){if(inputs[j].value)return inputs[j].value.trim();}
+    return '';
+  }
+  var __realProcessPayment=function(a,b,c,d,e){
+    var amountCents,email,productName,productDescription,customerName,quantity;
+    if(a&&typeof a==='object'){
+      amountCents=a.amountCents;email=a.email;productName=a.productName;
+      productDescription=a.productDescription||'';customerName=a.name||'';quantity=a.quantity||1;
+    }else{
+      amountCents=typeof a==='number'?a:0;productName=typeof b==='string'?b:'';
+      productDescription=typeof c==='string'?c:'';email='';customerName='';quantity=1;
+    }
+    if(!email)email=findEmail();
+    if(!customerName)customerName=findName();
+    if(!productName){alert('Product name is required.');return Promise.reject('no_product_name');}
+    if(!amountCents||amountCents<100){alert('Amount must be at least $1.00');return Promise.reject('invalid_amount');}
+    if(!email){alert('Please enter your email address.');return Promise.reject('no_email');}
+    var successBase=window.location.href.split('?')[0];
+    return fetch(apiBase+'/api/landing-pages/public/'+slug+'/payment/checkout',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:email,name:customerName,amountCents:amountCents,productName:productName,productDescription:productDescription,quantity:quantity,successUrl:successBase+'?payment=success&product='+encodeURIComponent(productName)+'&session_id={CHECKOUT_SESSION_ID}',cancelUrl:successBase+'?payment=cancelled'})
+    }).then(function(r){return r.json();}).then(function(d){
+      if(d.checkoutUrl){window.location.href=d.checkoutUrl;}
+      else{alert(d.error||'Failed to process payment');throw new Error(d.error);}
+    });
+  };
+  Object.defineProperty(window,'__processPayment',{value:__realProcessPayment,writable:false,configurable:false});
+  document.addEventListener('DOMContentLoaded',function(){
+    var urlParams=new URLSearchParams(window.location.search);
+    if(urlParams.get('payment')==='success'){
+      var pName=urlParams.get('product')||'your item';
+      var overlay=document.createElement('div');overlay.id='payment-success-overlay';
+      overlay.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:999999;font-family:system-ui,-apple-system,sans-serif;';
+      overlay.innerHTML='<div style="background:white;border-radius:16px;padding:40px;max-width:420px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.15);"><div style="width:64px;height:64px;border-radius:50%;background:#dcfce7;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><h2 style="margin:0 0 12px;font-size:24px;font-weight:700;color:#111827;">Payment Successful!</h2><p style="margin:0 0 24px;color:#6b7280;font-size:16px;">Thank you for purchasing '+pName.replace(/</g,'&lt;').replace(/>/g,'&gt;')+'.</p><button onclick="document.getElementById(\'payment-success-overlay\').remove();window.history.replaceState({},\'\',window.location.pathname);" style="padding:12px 32px;font-size:16px;font-weight:600;background:#16a34a;color:white;border:none;border-radius:8px;cursor:pointer;">Continue</button></div>';
+      document.body.appendChild(overlay);
+    }
+  });
+})();
+</script>  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">Aoni<span>tek</span></a>
+    <ul class="nav-links">
+      <li><a href="#como-funciona">Cómo funciona</a></li>
+      <li><a href="#resultados">Resultados</a></li>
+      <li><a href="#testimonios">Clientes</a></li>
+      <li><a href="#demo" class="nav-cta">Quiero una demo gratis</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-grid container">
+    <div>
+      <div class="hero-tag"><span class="hero-tag-dot"></span>Inteligencia artificial para PYMEs argentinas</div>
+      <h1>Tu negocio vendiendo<br>mientras <em>vos descansás</em></h1>
+      <p class="hero-sub">Implementamos inteligencia artificial en tu empresa en menos de 48 horas. Sin tecnicismos, sin complicaciones. Solo resultados concretos desde el primer día — aunque nunca hayas usado IA antes.</p>
+      <div class="hero-actions">
+        <a href="#demo" class="btn-primary">Ver demo gratuita →</a>
+        <a href="#como-funciona" class="btn-ghost">¿Cómo funciona?</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item"><div class="stat-num">48hs</div><div class="stat-lbl">Para estar operativo</div></div>
+        <div class="stat-item"><div class="stat-num">24/7</div><div class="stat-lbl">Disponibilidad garantizada</div></div>
+        <div class="stat-item"><div class="stat-num">0</div><div class="stat-lbl">Conocimientos técnicos requeridos</div></div>
+      </div>
+    </div>
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="phone-header">
+          <div class="phone-avatar">AI</div>
+          <div>
+            <div class="phone-name">Asistente Aonitek</div>
+            <div class="phone-status">En línea ahora</div>
+          </div>
+        </div>
+        <div class="msg"><div class="bubble in">Hola! Quería saber el precio del plan básico</div><div class="msg-time">14:32</div></div>
+        <div class="msg out"><div class="bubble out">¡Hola! Con mucho gusto. Nuestro plan inicial arranca en $49/mes e incluye todo lo que necesitás para empezar 🚀</div><div class="msg-time">14:32</div></div>
+        <div class="msg"><div class="bubble in">¿Y puedo probarlo antes de pagar?</div><div class="msg-time">14:33</div></div>
+        <div class="msg out"><div class="bubble out">¡Por supuesto! Tenemos una demo gratuita sin tarjeta. ¿Querés que te agende una llamada?</div><div class="msg-time">14:33</div></div>
+        <div class="msg"><div class="bubble in">Sí, perfecto 👍</div><div class="msg-time">14:33</div></div>
+        <div class="typing"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pain-section">
+  <div class="container">
+    <div style="max-width:640px;margin-bottom:3.5rem">
+      <div class="section-tag">El problema real</div>
+      <h2 class="section-title">Clientes que preguntan. Vos que no llegás a todo.</h2>
+      <p class="section-sub">No es que te falte capacidad. Es que las horas no alcanzan — y el costo de no responder a tiempo es mucho más alto de lo que parece.</p>
+    </div>
+    <div class="pain-grid">
+      <div class="pain-card"><div class="pain-icon">💬</div><div class="pain-title">Los mensajes que se acumulan</div><p class="pain-text">Son las 9 de la mañana y ya tenés 40 consultas sin responder del finde. Cada una es una oportunidad que se fue enfriando mientras dormías.</p></div>
+      <div class="pain-card"><div class="pain-icon">⏱️</div><div class="pain-title">El tiempo que se va en lo urgente</div><p class="pain-text">Pasás horas respondiendo "¿cuánto sale?" y "¿están abiertos?". El trabajo estratégico que hace crecer tu negocio siempre queda para después.</p></div>
+      <div class="pain-card"><div class="pain-icon">💸</div><div class="pain-title">Las ventas que perdés sin saberlo</div><p class="pain-text">El 80% de las ventas las cierra quien responde primero. Si tardás más de 5 minutos, tu competencia ya está cerrando ese trato.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="solution-section">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center">
+      <div>
+        <div class="section-tag">La solución</div>
+        <h2 class="section-title">IA que trabaja por vos. Sin vos.</h2>
+        <p style="color:var(--muted);line-height:1.75;margin-bottom:1.25rem;font-size:0.98rem">Instalamos agentes de inteligencia artificial que atienden a tus clientes, responden preguntas, agendan citas y acompañan el proceso de venta — con el mismo tono y conocimiento que usarías vos.</p>
+        <p style="color:var(--muted);line-height:1.75;margin-bottom:1.75rem;font-size:0.98rem">No es un chatbot genérico. Es una IA entrenada específicamente con la información de tu negocio: tus precios, tu forma de hablar, tus servicios.</p>
+        <div style="color:var(--blue-light);font-size:0.88rem;font-weight:600">→ Si nunca usaste IA, mejor. Nosotros nos encargamos de todo.</div>
+      </div>
+      <div class="feat-grid">
+        <div class="feat-card"><div class="feat-icon">🤖</div><div><div class="feat-title">No es el chatbot de botones de siempre</div><p class="feat-text">Entiende preguntas en lenguaje natural, maneja el contexto y responde como una persona capacitada.</p></div></div>
+        <div class="feat-card"><div class="feat-icon">⚡</div><div><div class="feat-title">Responde en menos de 3 segundos</div><p class="feat-text">A las 3 AM, el fin de semana, mientras estás en una reunión. Sin excepciones ni demoras.</p></div></div>
+        <div class="feat-card"><div class="feat-icon">🎯</div><div><div class="feat-title">Entrenada con los datos de tu negocio</div><p class="feat-text">Habla con el tono, el conocimiento y el estilo de comunicación de tu empresa. No respuestas genéricas.</p></div></div>
+        <div class="feat-card"><div class="feat-icon">🔗</div><div><div class="feat-title">Se integra con lo que ya usás</div><p class="feat-text">WhatsApp, Instagram, tu web, tu CRM. Sin cambiar cómo trabajás.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--black)" id="resultados">
+  <div class="container">
+    <div style="text-align:center"><div class="section-tag">Resultados que se miden</div><h2 class="section-title">Los números hablan solos</h2></div>
+    <div class="numbers-grid">
+      <div class="num-card"><div class="num-big">&lt;3s</div><div class="num-label">Tiempo de respuesta promedio de tu IA</div></div>
+      <div class="num-card"><div class="num-big">80%</div><div class="num-label">De ventas las cierra quien responde primero</div></div>
+      <div class="num-card"><div class="num-big">+3x</div><div class="num-label">Más consultas atendidas sin sumar personal</div></div>
+      <div class="num-card"><div class="num-big">48hs</div><div class="num-label">Para tener tu IA funcionando en tu negocio</div></div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--dark)" id="como-funciona">
+  <div class="container">
+    <div class="steps-grid">
+      <div>
+        <div class="section-tag">El proceso</div>
+        <h2 class="section-title">Cuatro pasos. Nosotros hacemos el trabajo.</h2>
+        <p class="section-sub" style="margin-bottom:2rem">No necesitás entender nada de tecnología. Te guiamos en cada etapa y nos encargamos de toda la parte técnica.</p>
+        <div style="background:rgba(37,99,235,0.06);border:1px solid rgba(59,130,246,0.15);border-radius:14px;padding:1.5rem">
+          <p style="font-size:0.88rem;color:var(--text);line-height:1.7"><strong style="color:var(--blue-light)">¿Te da vergüenza no saber por dónde empezar?</strong><br>Tranquilo — eso es exactamente para lo que estamos. La mayoría de nuestros clientes llegaron sin saber qué era un agente de IA. Hoy lo usan todos los días.</p>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="step-num">01</div><div><div class="step-title">Conocemos tu negocio</div><p class="step-text">Una charla de 30 minutos para entender tus servicios, tus clientes y cómo te comunicás. Sin formularios ni tecnicismos.</p></div></div>
+        <div class="step"><div class="step-num">02</div><div><div class="step-title">Entrenamos la IA con tu información</div><p class="step-text">Cargamos tus precios, preguntas frecuentes y tu estilo de comunicación. La IA aprende a responder como vos, pero disponible siempre.</p></div></div>
+        <div class="step"><div class="step-num">03</div><div><div class="step-title">Lo conectamos a tu canal en 48hs</div><p class="step-text">WhatsApp, tu web o Instagram. Todo listo en dos días hábiles, sin que tengas que hacer nada técnico vos.</p></div></div>
+        <div class="step"><div class="step-num">04</div><div><div class="step-title">Seguimiento y mejora continua</div><p class="step-text">Te mostramos qué está funcionando y cómo mejorar. No te dejamos solo después de la implementación.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--black)">
+  <div class="container">
+    <div class="section-tag">Comparación honesta</div>
+    <h2 class="section-title">¿Por qué no simplemente contratar a alguien más?</h2>
+    <p class="section-sub">Una pregunta válida. Miremos los números juntos.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Característica</th><th>Empleado de atención</th><th>Chatbot genérico</th><th class="col-aonitek">Aonitek IA</th></tr></thead>
+        <tbody>
+          <tr><td>Disponibilidad</td><td>8 horas / día</td><td>24/7</td><td class="winner col-aonitek"><span class="check">✓</span>24/7/365, sin excepción</td></tr>
+          <tr><td>Costo mensual estimado</td><td>$500–$1.500 USD</td><td>Variable</td><td class="winner col-aonitek"><span class="check">✓</span>Fracción del costo</td></tr>
+          <tr><td>Tiempo de respuesta</td><td>Minutos u horas</td><td>Inmediato</td><td class="winner col-aonitek"><span class="check">✓</span>Menos de 3 segundos</td></tr>
+          <tr><td>Conversación natural</td><td><span class="check">✓</span>Sí</td><td><span class="cross">✗</span>Solo botones rígidos</td><td class="winner col-aonitek"><span class="check">✓</span>Sí, como un humano capacitado</td></tr>
+          <tr><td>Conoce tu negocio</td><td>Después de capacitación</td><td><span class="cross">✗</span>No</td><td class="winner col-aonitek"><span class="check">✓</span>Desde el día 1</td></tr>
+          <tr><td>Escala sin costo extra</td><td><span class="cross">✗</span>Hay que contratar más</td><td>Parcialmente</td><td class="winner col-aonitek"><span class="check">✓</span>Atiende miles a la vez</td></tr>
+          <tr><td>Tiempo de implementación</td><td>Semanas de capacitación</td><td>Días sin personalización</td><td class="winner col-aonitek"><span class="check">✓</span>48 horas con todo listo</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--dark)" id="testimonios">
+  <div class="container">
+    <div class="section-tag">Testimonios</div>
+    <h2 class="section-title">Negocios como el tuyo, resultados reales</h2>
+    <div class="testi-grid">
+      <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"Yo no entendía nada de inteligencia artificial y me daba un poco de vergüenza preguntar. El equipo de Aonitek me explicó todo sin hacerme sentir mal. Hoy mi clínica atiende consultas a las 11 de la noche sin que yo esté."</p><div class="testi-divider"></div><div class="testi-author"><div class="avatar">MR</div><div><div class="author-name">Marcelo R.</div><div class="author-biz">Clínica dental · Córdoba</div></div></div></div>
+      <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"Tenía miedo de que sonara a robot y que mis clientas se fueran. Pasó lo contrario. Responde mejor que yo porque no se olvida nada y nunca tiene un mal día. Las ventas subieron 40% el primer mes."</p><div class="testi-divider"></div><div class="testi-author"><div class="avatar">SV</div><div><div class="author-name">Sofía V.</div><div class="author-biz">Tienda de indumentaria online · Buenos Aires</div></div></div></div>
+      <div class="testi-card"><div class="testi-stars">★★★★★</div><p class="testi-text">"Llevaba años postergando esto porque pensaba que era para empresas con presupuesto enorme. Aonitek me demostró que estaba equivocado. En 48 horas estaba funcionando y el ROI lo recuperé en el primer mes."</p><div class="testi-divider"></div><div class="testi-author"><div class="avatar">RP</div><div><div class="author-name">Rodrigo P.</div><div class="author-biz">Inmobiliaria · Rosario</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--black)">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:3.5rem"><div class="section-tag">El resultado real</div><h2 class="section-title">¿Cómo se ve tu vida con Aonitek?</h2></div>
+    <div class="dream-grid">
+      <div class="dream-card"><span class="dream-icon">🍽️</span><div class="dream-title">La cena sin el celular</div><p class="dream-text">Primera vez en meses que cenás en familia sin revisar el WhatsApp. Tu IA está atendiendo todo mientras vos disfrutás el momento.</p></div>
+      <div class="dream-card"><span class="dream-icon">🌅</span><div class="dream-title">El sábado que te pertenece</div><p class="dream-text">Es fin de semana. Estás en el parque. Tu negocio está cerrando ventas solo — sin que intervengas para nada.</p></div>
+      <div class="dream-card"><span class="dream-icon">📱</span><div class="dream-title">El despertar que querés</div><p class="dream-text">Son las 7 AM. Abrís el teléfono y ves: "Pago recibido — 3:47 AM". Tu negocio trabajó mientras dormías.</p></div>
+    </div>
+    <div class="dream-big"><p class="dream-big-text">Tu negocio: <span>abierto 24/7.</span><br>Tu estrés: <span>cero.</span></p></div>
+  </div>
+</section>
+
+<section class="cta-section" id="demo">
+  <div class="container" style="position:relative">
+    <div class="section-tag" style="display:inline-block;margin-bottom:1.5rem">Sin compromiso · Sin tecnicismos</div>
+    <h2>¿Listo para ver qué puede<br>hacer la IA por tu negocio?</h2>
+    <p>En 30 minutos te mostramos cómo funciona para tu negocio específico.<br>Sin presión. Sin jerga técnica. Solo posibilidades concretas.</p>
+    <a href="https://wa.me/5491112345678" class="btn-primary">Quiero mi demo gratuita →</a>
+    <div class="cta-note"><span>Sin tarjeta de crédito</span><span>Sin compromiso</span><span>Respuesta en menos de 24hs</span></div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Aoni<span>tek</span></div>
+    <p>© 2025 Aonitek · <a href="mailto:hola@aonitek.com">hola@aonitek.com</a> · Inteligencia artificial para PYMEs</p>
+  </div>
+</footer>
+
+<a href="https://wa.me/5491112345678" class="wa-float" title="Escribinos por WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+</body>
+</html>
