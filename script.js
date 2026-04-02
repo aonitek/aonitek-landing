@@ -1,0 +1,16 @@
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>40)});
+const toggle=document.getElementById('navToggle');
+const links=document.getElementById('navLinks');
+toggle.addEventListener('click',()=>{links.classList.toggle('open');toggle.textContent=links.classList.contains('open')?'✕':'☰'});
+links.querySelectorAll('a').forEach(a=>{a.addEventListener('click',()=>{links.classList.remove('open');toggle.textContent='☰'})});
+const observer=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+const stepObserver=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){const steps=document.querySelectorAll('.step');steps.forEach((s,i)=>{setTimeout(()=>s.classList.add('visible'),i*120)});stepObserver.disconnect()}})},{threshold:.2});
+const stepsContainer=document.querySelector('.process-steps');
+if(stepsContainer)stepObserver.observe(stepsContainer);
+setTimeout(()=>{document.getElementById('typingBubble').style.display='none';document.getElementById('responseBubble').style.display='block'},2200);
+setTimeout(()=>{document.getElementById('followupBubble').style.display='block'},4000);
+setTimeout(()=>{document.getElementById('confirmBubble').style.display='block'},5500);
+document.querySelectorAll('.faq-question').forEach(q=>{q.addEventListener('click',()=>{const item=q.parentElement;const wasOpen=item.classList.contains('open');document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));if(!wasOpen)item.classList.add('open')})});
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const target=document.querySelector(a.getAttribute('href'));if(target){e.preventDefault();target.scrollIntoView({behavior:'smooth',block:'start'})}})});
